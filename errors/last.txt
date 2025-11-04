@@ -1,9 +1,17 @@
 * EXCEPTION:
-* ERROR: Exception while requiring app/main.rb.
-* ERROR: Exception while requiring dragon.rb.
-dragon.rb does not exist.
+:inside_rect? failed for inner_rect: {:x=>19.0, :y=>49.0, :w=>0, :h=>0} outer_rect: #<Dragon:0x27c8bc90>.
+* ERROR - :w method missing on ~Dragon~.
+
+#+begin_src ~Dragon#inspect~
+#<Dragon:0x27c8bc90 @sprite={:primitive_marker=>:sprite}, @growth=0, @status=:idle, @x=0, @bond=0, @id=nil, @w=51, @last_interaction=0, @traits=[], @happiness=50, @name=nil, @energy=100, @h=54, @y=0, @stage=0, @hunger=0, @color=:white, @age=0, @mood="">
+#+end_src ~Dragon#inspect~
+
+
+
+The method named
+  :w
+doesn't exist on [Dragon, #<Class:#<Dragon:0x27c8bc90>>].
+
+(suggestions above)
 ** Backtrace:
-*** app/main.rb:1
-** Backtrace:
-*** app/main.rb:1
-** Backtrace:
+*** app/main.rb:12:in tick
