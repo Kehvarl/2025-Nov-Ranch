@@ -1,17 +1,20 @@
 * EXCEPTION:
-:inside_rect? failed for inner_rect: {:x=>19.0, :y=>49.0, :w=>0, :h=>0} outer_rect: #<Dragon:0x27c8bc90>.
-* ERROR - :w method missing on ~Dragon~.
+* ERROR - :<< method missing on ~NilClass~.
 
-#+begin_src ~Dragon#inspect~
-#<Dragon:0x27c8bc90 @sprite={:primitive_marker=>:sprite}, @growth=0, @status=:idle, @x=0, @bond=0, @id=nil, @w=51, @last_interaction=0, @traits=[], @happiness=50, @name=nil, @energy=100, @h=54, @y=0, @stage=0, @hunger=0, @color=:white, @age=0, @mood="">
-#+end_src ~Dragon#inspect~
+#+begin_src ~NilClass#inspect~
+nil
+#+end_src ~NilClass#inspect~
 
 
 
 The method named
-  :w
-doesn't exist on [Dragon, #<Class:#<Dragon:0x27c8bc90>>].
+  :<<
+with args
+  [#<Dragon:0x6bd5660 @anchor_x=0.5, @energy=100, @x=640, @mood="", @anchor_y=0.5, @id=nil, @status=:idle, @hunger=0, @w=51, @path="sprites/dragons/dragon_sprite_1x.png", @traits=[], @name=nil, @source_x=18, @growth=0, @last_interaction=0, @h=54, @stage=0, @source_y=36, @y=360, @bond=0, @source_w=17, @age=0, @color=:white, @happiness=50, @source_h=18>]
+doesn't exist on [NilClass, NilClassFalseClass].
 
 (suggestions above)
 ** Backtrace:
-*** app/main.rb:12:in tick
+*** app/ranch.rb:10:in new_dragon
+*** app/main.rb:6:in init
+*** app/main.rb:11:in tick
