@@ -1,8 +1,20 @@
 class Ranch
-    def initialise
+    def initialize
         @dragons = []
         @inventory = []
-        @weather
-        @time_of_day
+        @weather = nil
+        @time_of_day = nil
+    end
+
+    def new_dragon dragon
+        @dragons << dragon
+    end
+
+    def tick args
+        @dragons.map {|d| d.tick(args)}
+    end
+
+    def render
+        @dragons
     end
 end

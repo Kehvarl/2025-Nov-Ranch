@@ -28,6 +28,14 @@ class Dragon
         @anchor_y  = 0.5
     end
 
+    def tick args
+        if args.inputs.mouse.click
+            if args.inputs.mouse.inside_rect?(self)
+                click(args)
+            end
+        end
+    end
+
     def click args
         @w += 5
         @h += 5
