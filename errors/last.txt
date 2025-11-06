@@ -1,20 +1,7 @@
-* EXCEPTION:
-* ERROR - :<< method missing on ~NilClass~.
-
-#+begin_src ~NilClass#inspect~
-nil
-#+end_src ~NilClass#inspect~
-
-
-
-The method named
-  :<<
-with args
-  [#<Dragon:0x6bd5660 @anchor_x=0.5, @energy=100, @x=640, @mood="", @anchor_y=0.5, @id=nil, @status=:idle, @hunger=0, @w=51, @path="sprites/dragons/dragon_sprite_1x.png", @traits=[], @name=nil, @source_x=18, @growth=0, @last_interaction=0, @h=54, @stage=0, @source_y=36, @y=360, @bond=0, @source_w=17, @age=0, @color=:white, @happiness=50, @source_h=18>]
-doesn't exist on [NilClass, NilClassFalseClass].
-
-(suggestions above)
+* EXCEPTION: 'hunger': wrong number of arguments (0 for 1)
 ** Backtrace:
-*** app/ranch.rb:10:in new_dragon
-*** app/main.rb:6:in init
-*** app/main.rb:11:in tick
+*** app/dragon.rb:31:in hunger
+*** app/dragon.rb:41:in tick
+*** app/ranch.rb:14:in tick
+*** app/ranch.rb:14:in tick
+*** app/main.rb:16:in tick

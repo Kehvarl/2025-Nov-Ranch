@@ -28,7 +28,35 @@ class Dragon
         @anchor_y  = 0.5
     end
 
+    def hunger change
+        @hunger = (@hunger + change).clamp(1, 100)
+    end
+
+    def happiness change
+        @happiness = (@happiness + change).clamp(1, 100)
+    end
+
     def tick args
+        hunger 1
+        case @hunger
+        when 0
+            happiness 5
+        when (1...10)
+        when (11...25)
+        when (26...50)
+        when (51...75)
+            happiness -1
+        when (76...90)
+            happiness -2
+        when (91...99)
+            happiness -3
+        when (100...200)
+            happiness -5
+        end
+        if @happiness <= 0
+            @mood = :leaving
+        end
+
         if args.inputs.mouse.click
             if args.inputs.mouse.inside_rect?(self)
                 click(args)
