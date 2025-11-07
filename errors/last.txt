@@ -1,7 +1,20 @@
-* EXCEPTION: 'hunger': wrong number of arguments (0 for 1)
+* EXCEPTION:
+* ERROR - :elaplsed method missing on ~Dragon~.
+
+#+begin_src ~Dragon#inspect~
+#<Dragon:0x7c25770 @source_h=18, @mood="", @energy=100, @last_interaction=0, @hunger=0, @x=640, @id=nil, @w=51, @last_update_time=1762483046, @anchor_x=0.5, @path="sprites/dragons/dragon_sprite_1x.png", @traits=[], @anchor_y=0.5, @status=:idle, @hunger_rate=0.01, @name=nil, @source_x=18, @source_w=17, @bond=0, @h=54, @growth=0, @source_y=36, @y=360, @happiness=50, @stage=0, @energy_rate=-0.01, @age=0, @color=:white>
+#+end_src ~Dragon#inspect~
+
+
+
+The method named
+  :elaplsed
+doesn't exist on [Dragon, #<Class:#<Dragon:0x7c25770>>, AttrSprite, AttrRect].
+
+(suggestions above)
 ** Backtrace:
-*** app/dragon.rb:31:in hunger
-*** app/dragon.rb:41:in tick
+*** app/dragon.rb:143:in simulation
+*** app/dragon.rb:150:in tick
 *** app/ranch.rb:14:in tick
 *** app/ranch.rb:14:in tick
 *** app/main.rb:16:in tick
