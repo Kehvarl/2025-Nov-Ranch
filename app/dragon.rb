@@ -13,6 +13,7 @@ class Dragon
         @happiness = args.happiness || 50
         @bond      = args.bond || 0
         @last_interaction = args.last_interaction || 0
+        @last_update_time = Time.now.to_i
         @status    = args.status || :idle
         @color     = args.color || :white
         @x         = args.x || 0
@@ -28,16 +29,24 @@ class Dragon
         @anchor_y  = 0.5
     end
 
-    def hunger change
-        @hunger = (@hunger + change).clamp(1, 100)
+    def energy rate, elapsed
+        @energy = (@energy + (rate * elapsed)).clamp(1, 100)
     end
 
-    def happiness change
+    def hunger rate, elapsed
+        @hunger = (@hunger + (rate * elapsed)).clamp(1, 100)
+    end
+
+    def happiness change, time_delta
         @happiness = (@happiness + change).clamp(1, 100)
     end
 
     def tick args
-        hunger 1
+        elapsed = Time.now.to_i - @last_update_time
+        hunger 0.01, elapsed
+        energy -0.01, elapsed
+        @last_update_time = Time.now.to_i
+
         case @hunger
         when 0
             happiness 5
