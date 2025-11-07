@@ -9,7 +9,9 @@ class Dragon
         @traits    = args.traits || []
         @mood      = args.mood || ""
         @hunger    = args.hunger || 0
+        @hunger_rate = 0.01
         @energy    = args.energy || 100
+        @energy_rate = -0.01
         @happiness = args.happiness || 50
         @bond      = args.bond || 0
         @last_interaction = args.last_interaction || 0
@@ -35,36 +37,45 @@ class Dragon
 
     def hunger rate, elapsed
         @hunger = (@hunger + (rate * elapsed)).clamp(1, 100)
+        case @hunger
+            when 0
+                happiness 5
+            when (1...10)
+            when (11...25)
+            when (26...50)
+            when (51...75)
+                happiness -1
+            when (76...90)
+                happiness -2
+            when (91...99)
+                happiness -3
+            when (100...200)
+                happiness -5
+            end
+            if @happiness <= 0
+                @mood = :leaving
+            end
     end
 
-    def happiness change, time_delta
+    def happiness change
         @happiness = (@happiness + change).clamp(1, 100)
+    end
+
+    def simulate elapsed, increment=300
+        elapsed.div(increment).each do
+            hunger @hunger_rate, increment
+            energy @energy_rate, increment
+
+        end
+        remainder = elapsed % increment
+        hunger @hunger_rate, remainder
+        energy @energy_rate, remainder
     end
 
     def tick args
         elapsed = Time.now.to_i - @last_update_time
-        hunger 0.01, elapsed
-        energy -0.01, elapsed
+        simulate(elapsed, 300)
         @last_update_time = Time.now.to_i
-
-        case @hunger
-        when 0
-            happiness 5
-        when (1...10)
-        when (11...25)
-        when (26...50)
-        when (51...75)
-            happiness -1
-        when (76...90)
-            happiness -2
-        when (91...99)
-            happiness -3
-        when (100...200)
-            happiness -5
-        end
-        if @happiness <= 0
-            @mood = :leaving
-        end
 
         if args.inputs.mouse.click
             if args.inputs.mouse.inside_rect?(self)
