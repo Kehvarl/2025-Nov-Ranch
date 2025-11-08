@@ -32,11 +32,11 @@ class Dragon
     end
 
     def energy rate, elapsed
-        @energy = (@energy + (rate * elapsed)).clamp(1, 100)
+        @energy = (@energy + (rate * elapsed)).clamp(0, 100)
     end
 
     def hunger rate, elapsed
-        @hunger = (@hunger + (rate * elapsed)).clamp(1, 100)
+        @hunger = (@hunger + (rate * elapsed)).clamp(0, 100)
         case @hunger
             when 0
                 happiness 5
@@ -58,7 +58,7 @@ class Dragon
     end
 
     def happiness change
-        @happiness = (@happiness + change).clamp(1, 100)
+        @happiness = (@happiness + change).clamp(0, 100)
     end
 
     def simulate elapsed, increment=300
@@ -85,7 +85,11 @@ class Dragon
     end
 
     def click args
-        @w += 5
+        @bond = (@bond + 0.1).clamp(0,100)
+        if @bond > 10
+            happiness 1
+        end
         @h += 5
+        @w += 5
     end
 end
