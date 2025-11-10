@@ -1,5 +1,12 @@
 class Dragon
     attr_sprite
+
+    def self.generate args={}
+        colors = [:green, :white, :bronze, :aqua]
+        moods = [:sleepy, :curious, :playful]
+        dragon = Dragon.new({color: colors.sample, mood: moods.sample, x: args.x, y: args.y})
+    end
+
     def initialize args = {}
         @id        = args.id
         @name      = args.name
@@ -12,7 +19,7 @@ class Dragon
         @hunger_rate = 0.01
         @energy    = args.energy || 100
         @energy_rate = -0.01
-        @happiness = args.happiness || 50
+        @happiness = args.happiness || 0
         @bond      = args.bond || 0
         @last_interaction = args.last_interaction || 0
         @last_update_time = Time.now.to_i
@@ -22,7 +29,7 @@ class Dragon
         @y         = args.y || 0
         @w         = 51
         @h         = 54
-        @path      = "sprites/dragons/adgrnanim.png"
+        @path      = "sprites/dragons/#{args.color.to_s}.png" || "sprites/dragons/white.png"
         @frame     = rand(4)
         @frame_cnt = 4
         @anim_time = 12
@@ -78,7 +85,7 @@ class Dragon
     def update_animation args
         @anim_time -= 1
         if @anim_time <= 0
-            @anim_time = 12
+            @anim_time =  (24 - ((@happiness / 100.0) * 18)).round(0)
             @frame = (@frame + 1) % @frame_cnt
             @source_x = @frame * @source_w
         end
