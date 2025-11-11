@@ -1,21 +1,19 @@
 * EXCEPTION:
-* ERROR - :- method missing on ~NilClass~.
+* ERROR - :continue method missing on ~Ranch~.
 
-#+begin_src ~NilClass#inspect~
-nil
-#+end_src ~NilClass#inspect~
+#+begin_src ~Ranch#inspect~
+#<Ranch:0x3ef2e610 @dragons=[], @regions=[{:x=>0, :y=>0, :w=>1280, :h=>309}, {:x=>0, :y=>309, :w=>1280, :h=>411}], @inventory=[], @weather=nil, @time_of_day=nil>
+#+end_src ~Ranch#inspect~
 
 
 
 The method named
-  :-
-with args
-  [1261]
-doesn't exist on [NilClass, NilClassFalseClass].
+  :continue
+doesn't exist on [Ranch, #<Class:#<Ranch:0x3ef2e610>>].
 
 (suggestions above)
 ** Backtrace:
-*** app/ranch.rb:22:in bsp
+*** app/ranch.rb:32:in bsp
 *** app/ranch.rb:18:in bsp
 *** app/ranch.rb:9:in initialize
 *** app/main.rb:5:in init
