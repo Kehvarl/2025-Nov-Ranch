@@ -8,6 +8,7 @@ class Ranch
         while @regions.size < 3
             bsp()
         end
+        placement_grid()
     end
 
     def setup
@@ -40,7 +41,25 @@ class Ranch
         @regions = regions
     end
 
+    def placement_grid
+        for r in @regions
+            r.grid = []
+            (r.x + 16).step(r.w - r.x - 32, 64).each do |x|
+                (r.y + 16).step(r.h - r.y - 32, 64).each do |y|
+                    r.grid << [x,y]
+                end
+            end
+        end
+    end
+
     def new_dragon dragon
+        region = @regions.sample
+        while region.grid.size <= 0
+            region = @regions.sample
+        end
+        pos = region.grid.pop()
+        dragon.x = pos[0]
+        dragon.y = pos[1]
         @dragons << dragon
     end
 
