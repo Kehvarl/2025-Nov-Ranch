@@ -44,9 +44,9 @@ class Ranch
     def placement_grid
         for r in @regions
             r.grid = []
-            (r.x + 16).step(r.w - r.x - 32, 64).each do |x|
-                (r.y + 16).step(r.h - r.y - 32, 64).each do |y|
-                    r.grid << [x,y]
+            (r.x + 16).step(r.x + r.w - 32, 64).each do |x|
+                (r.y + 16).step(r.y + r.h - 32, 64).each do |y|
+                    r.grid << [x + Numeric.rand(-8..8), y + Numeric.rand(-8..8)]
                 end
             end
         end
@@ -57,7 +57,8 @@ class Ranch
         while region.grid.size <= 0
             region = @regions.sample
         end
-        pos = region.grid.pop()
+        pos = region.grid.sample()
+        region.grid.delete(pos)
         dragon.x = pos[0]
         dragon.y = pos[1]
         @dragons << dragon
