@@ -1,20 +1,18 @@
 * EXCEPTION:
-* ERROR - :continue method missing on ~Ranch~.
+* ERROR - :len method missing on ~Array~.
 
-#+begin_src ~Ranch#inspect~
-#<Ranch:0x3ef2e610 @dragons=[], @regions=[{:x=>0, :y=>0, :w=>1280, :h=>309}, {:x=>0, :y=>309, :w=>1280, :h=>411}], @inventory=[], @weather=nil, @time_of_day=nil>
-#+end_src ~Ranch#inspect~
+#+begin_src ~Array#inspect~
+[]
+#+end_src ~Array#inspect~
 
 
 
 The method named
-  :continue
-doesn't exist on [Ranch, #<Class:#<Ranch:0x3ef2e610>>].
+  :len
+doesn't exist on [Array, #<Class:#<Array:0x1c081890>>, Enumerable].
 
 (suggestions above)
 ** Backtrace:
-*** app/ranch.rb:32:in bsp
-*** app/ranch.rb:18:in bsp
-*** app/ranch.rb:9:in initialize
-*** app/main.rb:5:in init
+*** app/ranch.rb:57:in new_dragon
+*** app/main.rb:6:in init
 *** app/main.rb:13:in tick
