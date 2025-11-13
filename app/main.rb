@@ -3,9 +3,7 @@ require 'app/dragon.rb'
 
 def init args
   args.state.ranch = Ranch.new()
-  args.state.ranch.new_dragon(Dragon.generate({x: 640, y: 360}))
-  args.state.ranch.new_dragon(Dragon.generate({x: 320, y: 360}))
-  args.state.ranch.new_dragon(Dragon.generate({x: 960, y: 360}))
+  5.times {args.state.ranch.new_dragon(Dragon.generate())}
 end
 
 def tick args
