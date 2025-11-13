@@ -1,11 +1,11 @@
 class Ranch
-    BIOMES = [:meadow, :forest, :volcanic, :cavern, :aquatic]
+    BIOMES = [:meadow, :highland, :volcanic, :cavern, :aquatic]
     BIOME_COLORS = {
-        meadow:{r:0,g:64,b:64},
-        forest:{r:0,g:192,b:64},
-        volcanic:{r:192,g:32,b:32},
-        cavern:{r:64,g:64,b:64},
-        aquatic:{r:0,g:64,b:192},
+        meadow:   {r:120, g:220, b:120}, # bright spring greens
+        highland: {r:180, g:160, b:100},  # earthy tan with grass undertones
+        volcanic: {r:255, g:90,  b:60},  # glowing lava orange-red
+        cavern:   {r:100, g:100, b:120}, # cool stone gray-blue
+        aquatic:  {r:80,  g:160, b:255}, # clear blue water
     }
 
     def adjacent_biomes(biome)
@@ -23,7 +23,7 @@ class Ranch
         @regions = [{x:0, y:0, w:1280, h:720, biome: :meadow}]
         @weather = nil
         @time_of_day = nil
-        while @regions.size < 3
+        while @regions.size < 8
             bsp()
         end
         placement_grid()
@@ -95,7 +95,7 @@ class Ranch
         out = []
         for r in @regions
             out << {x:r.x, y:r.y, w:r.w, h:r.h, r:128, g:0, b:0}.border!
-            out << {x:r.x, y:r.y, w:r.w, h:r.h, **BIOME_COLORS[r.biome], a:32}.solid!
+            out << {x:r.x, y:r.y, w:r.w, h:r.h, **BIOME_COLORS[r.biome], a:64}.solid!
         end
         out << @dragons
         out
