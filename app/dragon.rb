@@ -1,6 +1,8 @@
 class Dragon
     attr_sprite
 
+    MOODS = [:leaving, :unhappy, :neutral, :positive, :happy]
+
     def self.generate args={}
         colors = [:green, :white, :bronze, :aqua]
         moods = [:sleepy, :curious, :playful]
@@ -9,19 +11,23 @@ class Dragon
 
     def initialize args = {}
         @id        = args.id
+        @region_id = args.region_id || 0
         @name      = args.name
         @age       = args.age || 0
         @stage     = args.stage || 0
         @growth    = args.growth || 0
         @traits    = args.traits || []
-        @mood      = args.mood || ""
+        @preferred_biomes = args.preferred_biomes || []
+        @mood      = args.mood || :neutral
         @hunger    = args.hunger || 0
         @hunger_rate = 0.01
         @energy    = args.energy || 100
         @energy_rate = -0.01
         @happiness = args.happiness || 0
         @bond      = args.bond || 0
-        @last_interaction = args.last_interaction || 0
+        @last_fed_at = args.last_fed_at || 0
+        @last_pet_at = args.last_pet_at || 0
+        @last_lay_at = args.last_fed_at || 0
         @last_update_time = Time.now.to_i
         @status    = args.status || :idle
         @color     = args.color || :white
