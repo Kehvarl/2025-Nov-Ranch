@@ -19,8 +19,9 @@ class Ranch
 
     def initialize
         @dragons = []
+        @eggs = []
         @inventory = []
-        @regions = [{x:0, y:0, w:1280, h:720, biome: :meadow}]
+        @regions = [{x:0, y:0, w:1280, h:720, biome: :meadow, eggs:[], dragons:[]}]
         @weather = nil
         @time_of_day = nil
         while @regions.size < 8
@@ -43,16 +44,20 @@ class Ranch
                     regions << r
                     next
                 end
-                regions << {x:r.x, y:r.y, w:(nx-r.x), h:r.h, biome:adjacent_biomes(r.biome).sample()}
-                regions << {x:nx, y:r.y, w:(r.w-(nx-r.x)), h:r.h, biome:adjacent_biomes(r.biome).sample()}
+                regions << {x:r.x, y:r.y, w:(nx-r.x), h:r.h,
+                            biome:adjacent_biomes(r.biome).sample(), eggs:[], dragons:[]}
+                regions << {x:nx, y:r.y, w:(r.w-(nx-r.x)), h:r.h,
+                            biome:adjacent_biomes(r.biome).sample(), eggs:[], dragons:[]}
             elsif mode == 1
                 ny = Numeric.rand((r.y+16)..(r.y+r.h-16))
                 if (ny - r.y) < min_size or (r.h - (ny-r.y)) < min_size
                     regions << r
                     next
                 end
-                regions << {x:r.x, y:r.y, w:r.w, h:(ny-r.y), biome:adjacent_biomes(r.biome).sample()}
-                regions << {x:r.x, y:ny, w:r.w, h:(r.h-(ny-r.y)), biome:adjacent_biomes(r.biome).sample()}
+                regions << {x:r.x, y:r.y, w:r.w, h:(ny-r.y),
+                            biome:adjacent_biomes(r.biome).sample(), eggs:[], dragons:[]}
+                regions << {x:r.x, y:ny, w:r.w, h:(r.h-(ny-r.y)),
+                            biome:adjacent_biomes(r.biome).sample(), eggs:[], dragons:[]}
             else
                 regions << r
             end
@@ -72,20 +77,39 @@ class Ranch
     end
 
     def new_dragon dragon
-        available_regions = @regions.select { |r| r[:grid].any? }
-        if not available_regions.empty?
+        add_dragon(dragon, get_allowed_region())
+    end
 
-            region = available_regions.sample
-            while region.grid.size <= 0
-                region = @regions.sample
-            end
-            pos = region.grid.sample()
-            region.grid.delete(pos)
-            dragon.x = pos[0]
-            dragon.y = pos[1]
-            @dragons << dragon
+    def get_allowed_region biomes=[:meadow, :highland, :volcanic, :cavern, :aquatic]
+        available_regions = @regions.select { |r| r[:grid].any? and biomes.include?(r[:biome]) }
+        if not available_regions.empty?
+            region_id = @regions.find_index(available_regions.sample)
         end
     end
+
+    # dragon management
+    def add_dragon(dragon, region_id)
+        region = @regions[region_id]
+        pos = region.grid.sample()
+        region.grid.delete(pos)
+        dragon.x = pos[0]
+        dragon.y = pos[1]
+        @dragons << dragon
+    end
+
+    def remove_dragon(dragon_id); end
+    def move_dragon(dragon_id, new_region_id); end
+
+    # egg management
+    def add_egg(egg, region_id); end
+    def remove_egg(egg_id); end
+    def move_egg(egg_id, new_region_id); end
+
+    # lookup helpers
+    def dragons_in_region(region_id); end
+    def eggs_in_region(region_id); end
+    def region_for_dragon(dragon_id); end
+    def region_for_egg(egg_id); end
 
     def tick args
         @dragons.map {|d| d.tick(args)}
