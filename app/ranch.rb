@@ -1,5 +1,6 @@
-class Ranch
-    BIOMES = [:meadow, :highland, :volcanic, :cavern, :aquatic]
+class Region
+    attr_accessor :biome, :capacity, :dragons, :eggs, :grid, :x, :y, :w, :h
+
     BIOME_COLORS = {
         meadow:   {r:120, g:220, b:120}, # bright spring greens
         highland: {r:180, g:160, b:100},  # earthy tan with grass undertones
@@ -7,6 +8,33 @@ class Ranch
         cavern:   {r:100, g:100, b:120}, # cool stone gray-blue
         aquatic:  {r:80,  g:160, b:255}, # clear blue water
     }
+
+    def initialize args={}
+        @biome            = args.biome || :meadow
+        @capacity         = args.capacity || 5
+        @dragions         = []
+        @eggs             = []
+        @last_update_time = 0
+
+        @grid             = []
+
+        @x                = args.x || 0
+        @y                = args.y || 0
+        @w                = args.w || 1280
+        @h                = args.h || 720
+    end
+
+    def render
+        out = []
+        out << {x:@x, y:@y, w:@w, h:@h, r:128, g:0, b:0}.border!
+        out << {x:@x, y:@y, w:@w, h:@h, **BIOME_COLORS[@biome], a:64}.solid!
+
+        out
+    end
+end
+
+class Ranch
+    BIOMES = [:meadow, :highland, :volcanic, :cavern, :aquatic]
 
     def adjacent_biomes(biome)
     i = BIOMES.index(biome)
@@ -21,7 +49,7 @@ class Ranch
         @dragons = []
         @eggs = []
         @inventory = []
-        @regions = [{x:0, y:0, w:1280, h:720, biome: :meadow, eggs:[], dragons:[]}]
+        @regions = [Region.new({x:0, y:0, w:1280, h:720, biome: :meadow, capacity: 5})]
         @weather = nil
         @time_of_day = nil
         while @regions.size < 8
@@ -44,20 +72,20 @@ class Ranch
                     regions << r
                     next
                 end
-                regions << {x:r.x, y:r.y, w:(nx-r.x), h:r.h,
-                            biome:adjacent_biomes(r.biome).sample(), eggs:[], dragons:[]}
-                regions << {x:nx, y:r.y, w:(r.w-(nx-r.x)), h:r.h,
-                            biome:adjacent_biomes(r.biome).sample(), eggs:[], dragons:[]}
+                regions << Region.new({x:r.x, y:r.y, w:(nx-r.x), h:r.h,
+                            biome:adjacent_biomes(r.biome).sample()})
+                regions << Region.new({x:nx, y:r.y, w:(r.w-(nx-r.x)), h:r.h,
+                            biome:adjacent_biomes(r.biome).sample()})
             elsif mode == 1
                 ny = Numeric.rand((r.y+16)..(r.y+r.h-16))
                 if (ny - r.y) < min_size or (r.h - (ny-r.y)) < min_size
                     regions << r
                     next
                 end
-                regions << {x:r.x, y:r.y, w:r.w, h:(ny-r.y),
-                            biome:adjacent_biomes(r.biome).sample(), eggs:[], dragons:[]}
-                regions << {x:r.x, y:ny, w:r.w, h:(r.h-(ny-r.y)),
-                            biome:adjacent_biomes(r.biome).sample(), eggs:[], dragons:[]}
+                regions << Region.new({x:r.x, y:r.y, w:r.w, h:(ny-r.y),
+                            biome:adjacent_biomes(r.biome).sample()})
+                regions << Region.new({x:r.x, y:ny, w:r.w, h:(r.h-(ny-r.y)),
+                            biome:adjacent_biomes(r.biome).sample()})
             else
                 regions << r
             end
@@ -81,7 +109,7 @@ class Ranch
     end
 
     def get_allowed_region biomes=[:meadow, :highland, :volcanic, :cavern, :aquatic]
-        available_regions = @regions.select { |r| r[:grid].any? and biomes.include?(r[:biome]) }
+        available_regions = @regions.select { |r| r.grid.any? and biomes.include?(r.biome) }
         if not available_regions.empty?
             region_id = @regions.find_index(available_regions.sample)
         end
@@ -118,8 +146,7 @@ class Ranch
     def render
         out = []
         for r in @regions
-            out << {x:r.x, y:r.y, w:r.w, h:r.h, r:128, g:0, b:0}.border!
-            out << {x:r.x, y:r.y, w:r.w, h:r.h, **BIOME_COLORS[r.biome], a:64}.solid!
+            out << r.render
         end
         out << @dragons
         out

@@ -1,20 +1,19 @@
 * EXCEPTION:
-* ERROR - :BIOMES method missing on ~Class~.
+* ERROR - :color method missing on ~Region~.
 
-#+begin_src ~Class#inspect~
-Ranch
-#+end_src ~Class#inspect~
+#+begin_src ~Region#inspect~
+#<Region:0x2af88cd0 @eggs=[], @x=0, @dragions=[], @h=277, @y=0, @w=792, @grid=[[26, 33], [38, 93], [33, 159], [24, 225], [99, 34], [101, 104], [100, 156], [104, 232], [163, 25], [162, 91], [154, 160], [156, 223], [229, 24], [227, 95], [231, 165], [227, 226], [294, 29], [291, 99], [282, 164], [296, 230], [353, 35], [344, 101], [351, 159], [344, 226], [411, 36], [409, 93], [410, 159], [408, 216], [476, 27], [479, 101], [488, 162], [473, 231], [537, 38], [540, 96], [547, 164], [544, 224], [613, 38], [605, 95], [607, 166], [607, 219], [670, 26], [664, 94], [675, 159], [673, 226], [728, 37], [740, 92], [744, 159], [729, 219]], @capacity=5, @last_update_time=0, @color={:r=>255, :g=>255, :b=>255}, @biome=:aquatic>
+#+end_src ~Region#inspect~
 
 
 
 The method named
-  :BIOMES
-doesn't exist on [Class, Ranch].
+  :color
+doesn't exist on [Region, #<Class:#<Region:0x2af88cd0>>].
 
 (suggestions above)
 ** Backtrace:
-*** app/dragon.rb:18:in initialize
-*** app/dragon.rb:7:in generate
-*** app/main.rb:6:in init
-*** app/main.rb:6:in init
-*** app/main.rb:11:in tick
+*** app/ranch.rb:22:in render
+*** app/ranch.rb:148:in render
+*** app/ranch.rb:147:in render
+*** app/main.rb:16:in tick
