@@ -129,7 +129,14 @@ class Ranch
     def move_dragon(dragon_id, new_region_id); end
 
     # egg management
-    def add_egg(egg, region_id); end
+    def add_egg(egg, region_id)
+        region = @regions[region_id]
+        pos = region.grid.sample()
+        region.grid.delete(pos)
+        egg.x = pos[0]
+        egg.y = pos[1]
+        eggs << egg
+    end
     def remove_egg(egg_id); end
     def move_egg(egg_id, new_region_id); end
 
