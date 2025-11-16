@@ -1,3 +1,36 @@
+class Egg
+    attr_sprite
+
+    def initialize args = {}
+        @id        = args.id
+        @region_id = args.region_id || 0
+        @name      = args.name
+        @age       = args.age || 0
+        @incubation_required = 10
+        @last_update_time = 0
+
+        @x         = args.x || 0
+        @y         = args.y || 0
+        @w         = 51
+        @h         = 54
+        @path      = "sprites/circle/white.png"
+        @anim_time = 12
+        @anchor_x  = 0.5
+        @anchor_y  = 0.5
+    end
+
+    def tick args
+        if args.inputs.mouse.click
+            if args.inputs.mouse.inside_rect?(self)
+                click(args)
+            end
+        end
+    end
+
+    def click args
+    end
+end
+
 class Dragon
     attr_sprite
 
